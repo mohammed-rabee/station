@@ -17,7 +17,7 @@ public class EmployeeService {
     }
 
     public String assign (Call call ) {
-        List<Employee> employees = employeeRepository.findAllByStateAndGrade(false , 1);
+        List<Employee> employees = employeeRepository.findAllByBusyAndGrade(false , 1);
 //        employees.get(0).addCalls(call);
 //        employees.get(0).setBusy(true);
 //        employeeRepository.saveAndFlush(employees.get(0));
