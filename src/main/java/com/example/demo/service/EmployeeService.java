@@ -16,12 +16,12 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public String assign (Call call ) {
+    public Employee assign () {
         List<Employee> employees = employeeRepository.findAllByBusyAndGrade(false , 1);
 //        employees.get(0).addCalls(call);
-//        employees.get(0).setBusy(true);
-//        employeeRepository.saveAndFlush(employees.get(0));
-        return "test";
+        employees.get(0).setBusy(true);
+        employeeRepository.saveAndFlush(employees.get(0));
+        return employeeRepository.getOne(1);
     }
 //
 //    public void vipAssign ( Call call ) {

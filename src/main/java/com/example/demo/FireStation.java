@@ -52,8 +52,9 @@ public class FireStation {
 
             System.out.println("Enter the call Priority");
             call.setPriority(scan.nextInt());
+            call.setEmployee(employeeService.assign());
             callRepository.save(call);
-//            System.out.println(employeeService.assign(call));
+
 
         };
     }
