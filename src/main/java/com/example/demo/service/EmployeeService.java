@@ -16,15 +16,46 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee assign () {
-        List<Employee> employees = employeeRepository.findAllByBusyAndGrade(false , 1);
-//        employees.get(0).addCalls(call);
-        employees.get(0).setBusy(true);
-        employeeRepository.saveAndFlush(employees.get(0));
-        return employeeRepository.getOne(1);
+    public Employee assign () throws Exception {
+        List<Employee> employees = employeeRepository.findAllByBusyAndGrade(false, 1);
+        if (!employees.isEmpty()) {
+            employees.get(0).setBusy(true);
+            employeeRepository.saveAndFlush(employees.get(0));
+            return employees.get(0);
+        } else {
+            employees = employeeRepository.findAllByBusyAndGrade(false, 2);
+            if (!employees.isEmpty()) {
+                employees.get(0).setBusy(true);
+                employeeRepository.saveAndFlush(employees.get(0));
+                return employees.get(0);
+            } else {
+                employees = employeeRepository.findAllByBusyAndGrade(false, 3);
+                if (!employees.isEmpty()) {
+                    employees.get(0).setBusy(true);
+                    employeeRepository.saveAndFlush(employees.get(0));
+                    return employees.get(0);
+                } else {
+                    throw new Exception("no one to handle the request");
+                }
+            }
+        }
     }
-//
-//    public void vipAssign ( Call call ) {
-//
-//    }
+
+    public Employee vipAssign () throws Exception {
+        List<Employee> employees = employeeRepository.findAllByBusyAndGrade(false,2);
+        if (!employees.isEmpty()) {
+            employees.get(0).setBusy(true);
+            employeeRepository.saveAndFlush(employees.get(0));
+            return employees.get(0);
+        } else {
+            employees = employeeRepository.findAllByBusyAndGrade(false, 3);
+            if (!employees.isEmpty()) {
+                employees.get(0).setBusy(true);
+                employeeRepository.saveAndFlush(employees.get(0));
+                return employees.get(0);
+            } else {
+                throw new Exception("no one to handle the request");
+            }
+        }
+    }
 }

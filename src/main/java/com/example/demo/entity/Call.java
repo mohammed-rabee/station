@@ -17,12 +17,12 @@ public class Call {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
     private String Caller;
-    private int priority;
+    private String priority;
 
     @ManyToOne
     private Employee employee;
 
-    public Call(String caller, int priority, Employee employee) {
+    public Call(String caller, String priority, Employee employee) {
         Caller = caller;
         this.priority = priority;
         this.employee = employee;

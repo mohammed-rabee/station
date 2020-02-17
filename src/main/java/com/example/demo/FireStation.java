@@ -45,16 +45,27 @@ public class FireStation {
             employeeRepository.save(employee5);
 
             Scanner scan = new Scanner(System.in);
-            Call call = new Call();
 
-            System.out.println("Enter the caller name");
-            call.setCaller(scan.nextLine());
+            String priority;
+            while (true) {
+                Call call = new Call();
+                System.out.println("Enter the caller name");
+                call.setCaller(scan.nextLine());
 
-            System.out.println("Enter the call Priority");
-            call.setPriority(scan.nextInt());
-            call.setEmployee(employeeService.assign());
-            callRepository.save(call);
+                System.out.println("Enter the call Priority");
+                priority = scan.nextLine();
+                call.setPriority(priority);
+                if ( priority.equalsIgnoreCase("low") ) {
 
+                    call.setEmployee(employeeService.assign());
+                    callRepository.save(call);
+
+                } else if ( priority.equalsIgnoreCase("high") ) {
+                    call.setEmployee(employeeService.vipAssign());
+                    callRepository.save(call);
+                } else if (priority.equalsIgnoreCase("exit"))
+                    break;
+            }
 
         };
     }
