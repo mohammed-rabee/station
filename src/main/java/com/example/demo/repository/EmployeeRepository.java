@@ -8,6 +8,7 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee,Integer> {
     List<Employee> findAllByBusyAndGrade(boolean busy, int grade);
+    List<Employee> findAllByBusy(boolean busy);
 
 //    @Query("from Employee e where e.name = :name")
 //    List<Employee> findByQuery(@Param("name") String name);

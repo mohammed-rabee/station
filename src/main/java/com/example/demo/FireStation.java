@@ -6,6 +6,7 @@ import com.example.demo.repository.CallRepository;
 import com.example.demo.repository.EmployeeRepository;
 import com.example.demo.service.CallService;
 import com.example.demo.service.EmployeeService;
+import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,24 +48,40 @@ public class FireStation {
             Scanner scan = new Scanner(System.in);
 
             String priority;
-            while (true) {
-                Call call = new Call();
-                System.out.println("Enter the caller name");
-                call.setCaller(scan.nextLine());
+            String comment;
+            try {
+                while (true) {
+                    Call call = new Call();
 
-                System.out.println("Enter the call Priority");
-                priority = scan.nextLine();
-                call.setPriority(priority);
-                if ( priority.equalsIgnoreCase("low") ) {
+                    System.out.println("Enter the caller name");
+                    call.setCaller(scan.nextLine());
 
-                    call.setEmployee(employeeService.assign());
-                    callRepository.save(call);
+                    System.out.println("Enter the call Priority");
+                    priority = scan.nextLine();
+                    call.setPriority(priority);
+                    if ( priority.equalsIgnoreCase("low") ) {
+                        employeeService.assign(call);
+//                        call.setEmployee(employee);
+//                        callRepository.save(call);
 
-                } else if ( priority.equalsIgnoreCase("high") ) {
-                    call.setEmployee(employeeService.vipAssign());
-                    callRepository.save(call);
-                } else if (priority.equalsIgnoreCase("exit"))
-                    break;
+                    } else if ( priority.equalsIgnoreCase("high") ) {
+                        employeeService.vipAssign(call);
+//                        call.setEmployee(employee);
+//                        callRepository.save(call);
+                    }
+
+                    Thread thread = new Thread(){
+                        @SneakyThrows
+                        public void run(){
+                            employeeService.endCall();
+                        }
+                    };
+                    thread.start();
+
+                }
+                // onHold call
+            } catch ( Exception e ) {
+                Thread.sleep(100000);
             }
 
         };
